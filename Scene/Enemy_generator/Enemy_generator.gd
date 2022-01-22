@@ -2,7 +2,7 @@ extends Position2D
 
 signal create_enemy(enemy, location)
 
-var enemy = preload("res://Scene/Enemies/Enemy_1.tscn")
+export var enemy : PackedScene
 
 onready var screen_size = OS.get_screen_size()
 
