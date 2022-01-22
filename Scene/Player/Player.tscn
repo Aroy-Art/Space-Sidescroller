@@ -1,0 +1,64 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scene/Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Player/thrust-sprites/thrust-preview1.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Player/thrust-sprites/thrust-preview2.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Player/ship-sprites/ship-04.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Player/ship-sprites/ship-01.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Player/ship-sprites/ship-05.png" type="Texture" id=6]
+[ext_resource path="res://Scene/Player_Bullet/Player_Bullet.tscn" type="PackedScene" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "Flay",
+"speed": 3.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 11.5616
+height = 77.3194
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+Bullet = ExtResource( 7 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+position = Vector2( -66.1232, 0.527037 )
+scale = Vector2( 0.817563, 0.817563 )
+frames = SubResource( 1 )
+frame = 1
+playing = true
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+animation = "Flay"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( -0.27739, 4.43823 )
+rotation = 1.5708
+shape = SubResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="." groups=["Enemy_damager"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2( -0.27739, 4.43823 )
+rotation = 1.5708
+shape = SubResource( 3 )
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
